@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+   Search
+{% endblock title %}
+
+{% block search %}
+    {% if request.user.is_authenticated == False %}
+    {% else %}
+        <form class="form-inline" style="margin-right:20px;" method = POST action="{%url 'search-books' %}">
+             {% csrf_token %}
+             <input style="width:175px; text-align:center; background-color:#edede9" class="form-control" type = "search" placeholder= "Search Books" name = "searched">
+             <button style="margin-left:5px; background-color:#333D29; color:#edede9" class="btn" type="submit">Search</button>
+         </form>
+    {% endif %}
+{% endblock search %}
+
+{% block sidenav %}
+    {% for item in item_list %}
+            <li><a style="margin:20px; color:#edede9; font-size:1.15em;" href="{{ item.link }}"> {{item.item}} </a></li>
+    {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+        <h3 style="color:#333D29;" align="center"> Results Containing: "{{searched}}"</h3>
+        <br/>
+
+<div style=" width:50%; margin: 0 auto;">
+    <table style="" class="table table-hover table-md">
+        {% for book in books %}
+            <tr>
+                <td style="font-weight:bold; color:#333D29;text-align:center;">
+            <a style="color:#333D29;" href="book_detail/{{ book.id }}"> {{book.name}}</a> <br/>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock content %}

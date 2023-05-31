@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register Success !
+{% endblock title %}
+
+{% block search %}
+    {% if request.user.is_authenticated == False %}
+    {% endif %}
+{% endblock search %}
+
+{% block sidenav %}
+
+{% endblock sidenav %}
+
+{% block content %}
+<div class="justify-content-center" style=" padding-top:5px; width:50%; margin: 0 auto;">
+    <h1 style="color:#333D29;" align="center"> Registration Success! </h1>
+
+    <br>
+    <h4 class="justify-content-center" style="color:#333D29;"> To Login: <a style="background-color:#656D4A; color:#edede9;
+                    padding-left:10px; padding-right:10px; font-size:0.9em;"  href="{% url 'login' %}?next=/">Click here</a></h4>
+</div>
+{% endblock content %}

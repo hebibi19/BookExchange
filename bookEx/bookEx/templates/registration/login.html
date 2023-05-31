@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register
+{% endblock title %}
+
+{% block search %}
+    {% if request.user.is_authenticated == False %}
+    {% endif %}
+{% endblock search %}
+
+{% block sidenav %}
+
+{% endblock sidenav %}
+
+{% block content %}
+<div style=" padding-top:5px; width:50%; margin: 0 auto;">
+    <h3 style="text-decoration:underline; color:#333D29;" align="center"> User Login Form </h3>
+        <form action="{% url 'login' %}" method="post">
+            <table style="text-transform:uppercase; color:#333D29;" align="center">
+                {{form.as_table}}
+                <tr>
+                    <td>
+                        <input align="center" style="background-color:#656D4A; color:#edede9;" type="submit" value="Submit">
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+
+            <h4 style="text-align:center;">
+                To register:
+                <a style= "text-decoration:underline; color:#333D29;" href="{% url 'register' %}">Click Here</a>
+            </h4>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% csrf_token %}
+        </form>
+</div>
+{% endblock content %}

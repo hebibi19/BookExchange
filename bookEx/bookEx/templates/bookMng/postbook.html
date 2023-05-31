@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Post Book
+{% endblock title %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block sidenav %}
+    {% for item in item_list %}
+            <li><a style="margin:20px; color:#edede9; font-size:1.15em;" href="{{ item.link }}"> {{item.item}} </a></li>
+    {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+
+    {% if submitted %}
+<div style=" padding-top:5px; width:50%; margin: 0 auto;">
+        <h2 style="color:#333D29;" align="center"> New Book Submitted Successfully</h2>
+</div>
+    {% else %}
+<div style=" padding-top:5px; width:50%; margin: 0 auto;">
+
+<div style=" padding-top:5px; width:80%; margin: 0 auto;">
+        <h3 style="text-decoration:underline; color:#333D29;" align="center"> POST BOOK FORM</h3>
+</div>
+
+        <form action="" enctype="multipart/form-data" method="post" novalidate>
+            <table style="text-transform:uppercase; color:#333D29;" align="center">
+                {{form.as_table}}
+                <tr>
+                    <td>
+                        <input style="background-color:#656D4A; color:#edede9;"  type="submit" value="Submit">
+                    </td>
+                </tr>
+            </table>
+            {% csrf_token %}
+        </form>
+</div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Display Books
+{% endblock title %}
+
+{% block search %}
+    {% if request.user.is_authenticated == False %}
+    {% else %}
+        <form class="form-inline" style="margin-right:20px;" method = POST action="{%url 'search-books' %}">
+             {% csrf_token %}
+             <input style="width:175px; text-align:center; background-color:#edede9" class="form-control" type = "search" placeholder= "Search Books" name = "searched">
+             <button style="margin-left:5px; background-color:#333D29; color:#edede9" class="btn" type="submit">Search</button>
+         </form>
+    {% endif %}
+{% endblock search %}
+
+{% block sidenav %}
+    {% for item in item_list %}
+            <li><a style="margin:20px; color:#edede9; font-size:1.15em;" href="{{ item.link }}"> {{item.item}} </a></li>
+    {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+
+<div class="justify-content-center" style=" padding-top:5px; width:50%; margin: 0 auto;">
+    <table style="" class="table table-hover table-md">
+      <thead style="background-color:#333D29; color:#C2C5AA; text-transform:uppercase;">
+        <tr>
+          <th scope="col">Book Title</th>
+          <th scope="col">Owner</th>
+            <th scope="col">Price</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+        {% for book in books %}
+        <tr>
+            <td >
+                <span style="font-weight:bold; color:#333D29;"> {{ book.name }} </span>
+            </td>
+            <td>
+                <span style="font-weight:bold; text-transform:lowercase; color:#333D29;"> {{book.username}} </span>
+            </td>
+            <td>
+                <span style="font-weight:bold; color:#333D29;"> ${{book.price}} </span>
+            </td>
+            <td>
+                <a style="font-weight:bold; float:right; padding: 5px 10px; background-color:#333D29; color:#C2C5AA; font-size:0.9em;" href="book_detail/{{ book.id }}"> Details </a>
+            </td>
+        </tr>
+
+    {% endfor %}
+    </table>
+</div>
+
+{% endblock content %}

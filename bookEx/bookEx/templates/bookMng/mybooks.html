@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+    My Books
+{% endblock title %}
+
+{% block search %}
+    {% if request.user.is_authenticated == False %}
+    {% else %}
+        <form class="form-inline" style="margin-right:20px;" method = POST action="{%url 'search-books' %}">
+             {% csrf_token %}
+             <input style="width:175px; text-align:center; background-color:#edede9" class="form-control" type = "search" placeholder= "Search Books" name = "searched">
+             <button style="margin-left:5px; background-color:#333D29; color:#edede9" class="btn" type="submit">Search</button>
+         </form>
+    {% endif %}
+{% endblock search %}
+
+{% block sidenav %}
+    {% for item in item_list %}
+            <li><a style="margin:20px; color:#edede9; font-size:1.15em;" href="{{ item.link }}"> {{item.item}} </a></li>
+    {% endfor %}
+{% endblock sidenav %}
+
+{% block content %}
+
+<div style=" padding-top:5px; width:70%; margin: 0 auto;">
+    <table class="table table-hover table-md">
+        <thead style="background-color:#333D29; color:#C2C5AA; text-transform:uppercase; text-align:center;">
+        <tr>
+            <th scope="col">Book Title</th>
+            <th scope="col">Favorite?</th>
+            <th scope="col">Rating</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+      </thead>
+    {% for book in books %}
+        <tr>
+            <td style="text-align:center;">
+                <span style="font-weight:bold; color:#333D29;"> {{ book.name }} </span>
+            </td>
+
+            <!-- If the book's attribute 'favorite' is true -->
+            {% if book.favorite == True %}
+                <!-- have a heart in its place -->
+                <td style="font-size:1.2em;font-weight:bold; color:#333D29;text-align:center;">
+                   <span style=""> ♡ </span>
+                </td>
+                <!-- if the book's attribute 'favorite' is False -->
+                {% else %}
+                <!-- display the option to add the book to the favorite's page -->
+                <td style="font-weight:bold; color:#333D29;text-align:center;">
+                    <a style="font-weight:bold; padding: 5px 10px; background-color:#333D29;
+                color:#C2C5AA; font-size:0.92em; text-align:center;" href="add_favorite/{{book.id}}"> Add Favorite </a>
+                </td>
+                {% endif %}
+
+                <!-- rate a book -->
+                {% if book.rated != null %}
+                <td style="text-align:center;">
+                    <span style="font-weight:bold; color:#333D29; margin-right:5px;"> {{book.rated}}/5 </span> <a style="font-weight:bold; padding: 5px 10px; background-color:#656D4A; color:#C2C5AA; font-size:0.85em;" href="delete_rating/{{book.id}}"> [ remove ]  </a>
+                </td>
+                {% else %}
+                <td style="text-align:center;">
+                    <a style="color:#656D4A;" href="rate_book/{{book.id}}/1"> ★ </a>
+                    <a style="color:#656D4A;" href="rate_book/{{book.id}}/2"> ★ </a>
+                    <a style="color:#656D4A;" href="rate_book/{{book.id}}/3"> ★ </a>
+                    <a style="color:#656D4A;" href="rate_book/{{book.id}}/4"> ★ </a>
+                    <a style="color:#656D4A;" href="rate_book/{{book.id}}/5"> ★ </a>
+                </td>
+                {% endif %}
+            <td>
+                <a style="font-weight:bold; float:right; padding: 5px 10px; background-color:#333D29;
+                color:#C2C5AA; font-size:0.92em;" href="book_detail/{{ book.id }}"> Details </a>
+            </td>
+            <td>
+                <a style="font-weight:bold; float:right; padding: 5px 10px; background-color:#6f1d1b; color:#C2C5AA; font-size:0.85em;" href="book_delete/{{ book.id }}"> DELETE </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock content %}
