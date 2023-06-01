@@ -1,5 +1,5 @@
 # BookExchange
-Web Application allows users to manage and manipulate thier 'books' through a variety of methods (post, display. favorite, rate, delete, search, comment).
+Web Application allows users to manage and manipulate thier 'books' through a variety of methods (post, display, favorite, rate, delete, search, comment).
 
 ## About the Project
 
